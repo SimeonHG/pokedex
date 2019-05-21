@@ -22,14 +22,19 @@ class PokemonsController < ApplicationController
 	end
 
 	def update
-    pokemon = Pokemon.find(params[:id])
+    	pokemon = Pokemon.find(params[:id])
 
-    if pokemon.update(pokemon_params)
-      render json: pokemon, status: :ok
-    else
-      render json: { errors: pokemon.errors }, status: :unprocessable_entity
-    end
-  end
+  	  	if pokemon.update(pokemon_params)
+     		render json: pokemon, status: :ok
+    	else
+      		render json: { errors: pokemon.errors }, status: :unprocessable_entity
+    	end
+  	end
+
+  	def destroy
+  		pokemon = Pokemon.find(params[:id])
+  		pokemon.destroy
+  	end
 
 	def pokemon_params
 		params.require(:pokemon).permit(:name, :level, :primary_type, :secondary_type, :trainer_name, :hight, :weight, :gender,:region)
