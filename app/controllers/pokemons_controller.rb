@@ -1,5 +1,10 @@
 class PokemonsController < ApplicationController
 	#pokemon = Pokemon.find(params[:id])
+	
+	#before_action :create do |pokemon|
+	#	pokemon.api_key = pokemon.generate_api_key
+	#end
+	
 	def index
 		pokemons = Pokemon.all
 		render json: pokemons, status: :ok
@@ -7,6 +12,7 @@ class PokemonsController < ApplicationController
 
 	def create
 		pokemon = Pokemon.new(pokemon_params)
+		pokemon.api_key = generate_api_key
 		if pokemon.save
 			render json: pokemon, status: :created
 			#p "hi"
@@ -38,5 +44,17 @@ class PokemonsController < ApplicationController
 
 	def pokemon_params
 		params.require(:pokemon).permit(:name, :level, :primary_type, :secondary_type, :trainer_name, :hight, :weight, :gender,:region)
+	end
+
+
+	def generate_api_key
+		loop do
+
+			token = SecureRandom.base64.tr('+/=', 'Qrt')
+			break token unless Pokemon.exists?(api_key: token)
+
+
+		end
+
 	end
 end
