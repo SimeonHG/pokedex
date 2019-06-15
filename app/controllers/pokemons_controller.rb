@@ -8,7 +8,7 @@ class PokemonsController < ApplicationController
 	def create
 		pokemon = Pokemon.new(pokemon_params)
 		if pokemon.save
-			render json: pokemon, status: :created, location: 'pokemons/' + pokemon.id.to_s
+			render json: pokemon, status: :created, location: 'http://localhost:3000/pokemons/' + pokemon.id.to_s
 			#p "hi"
 		else
 			render json: {errors: pokemon.errors}, status: :unprocessable_entry
