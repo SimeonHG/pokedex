@@ -2,7 +2,9 @@ class PokemonsController < ApplicationController
 	#pokemon = Pokemon.find(params[:id])
 	def index
 		pokemons = Pokemon.all
-		render json: pokemons, status: :ok
+		#render json: pokemons, status: :ok
+
+		paginate Pokemon.unscoped, per_page: 5
 	end
 
 	def create
